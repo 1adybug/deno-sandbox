@@ -4,7 +4,7 @@
     "tasks": {
         "dev": "deno run --watch main.ts",
         "start": "deno run main.ts",
-        "build": "docker build -t luzixu/deno-sandbox ."
+        "build": "docker build -t luzixu/deno-sandbox . && docker push luzixu/deno-sandbox"
     },
     "imports": {
         "@hono/hono": "jsr:@hono/hono@^4.7.5",
