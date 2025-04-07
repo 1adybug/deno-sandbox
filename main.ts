@@ -34,7 +34,9 @@ app.post("/", async c => {
     const worker = new Worker(url, {
         type: "module",
         deno: {
-            permissions: "none",
+            permissions: {
+                net: ["esm.sh"],
+            },
         },
     })
 

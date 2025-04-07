@@ -14,6 +14,13 @@
       "integrity": "sha512-lY7CDW43ECgW9u1TcT3IoXHflywfVqDYze4waEz812jR/bZ8FHDsl7pFQoSZTz5N+2NqRXs8GBwnAwo3ZNxqhQ=="
     }
   },
+  "redirects": {
+    "https://esm.sh/dayjs": "https://esm.sh/dayjs@1.11.13"
+  },
+  "remote": {
+    "https://esm.sh/dayjs@1.11.13": "89c34b8b3f7b970708114b4d264c9430c30eb0c2eab1419410c77ffefa18fe2c",
+    "https://esm.sh/dayjs@1.11.13/denonext/dayjs.mjs": "a6d8258bec464149ab2c9ae26e4bd3736897828586b03f8fea45403080bf8a80"
+  },
   "workspace": {
     "dependencies": [
       "jsr:@hono/hono@^4.7.5",
