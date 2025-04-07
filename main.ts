@@ -5,7 +5,7 @@ const app = new Hono()
 
 const schema = z.object({
     script: z.string().min(1),
-    timeout: z.number().int().min(1).max(30).optional(),
+    timeout: z.number().int().min(1).max(10).optional(),
 })
 
 app.post("/", async c => {
@@ -16,7 +16,7 @@ app.post("/", async c => {
         const body = await c.req.json()
         const info = schema.parse(body)
         script = info.script
-        timeout = info.timeout ?? 30
+        timeout = info.timeout ?? 10
     } catch (error) {
         return c.json(
             {
