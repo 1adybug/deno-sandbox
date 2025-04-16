@@ -13,4 +13,4 @@ RUN deno cache --reload --lock=deno.lock main.ts
 EXPOSE 80
 
 # 运行应用程序
-CMD ["deno", "run", "--allow-net", "--unstable-worker-options", "main.ts"]
+CMD ["deno", "run", "--allow-net", "--allow-env", "--unstable-worker-options", "main.ts"]

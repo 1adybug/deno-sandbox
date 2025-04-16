@@ -8,6 +8,8 @@ const schema = z.object({
     timeout: z.number().int().min(1).max(10).optional(),
 })
 
+const allowedHostnames = Deno.env.get("ALLOWED_HOSTNAMES")?.split(",") ?? []
+
 app.post("/", async c => {
     let script: string | undefined
     let timeout: number | undefined
@@ -35,7 +37,7 @@ app.post("/", async c => {
         type: "module",
         deno: {
             permissions: {
-                net: ["esm.sh"],
+                net: allowedHostnames,
             },
         },
     })
