@@ -8,7 +8,21 @@ const schema = z.object({
     timeout: z.number().int().min(1).max(10).optional(),
 })
 
-const allowedHostnames = Deno.env.get("ALLOWED_HOSTNAMES")?.split(",") ?? []
+const allowedHostnames = Deno.env.get("ALLOWED_HOSTNAMES")?.split(",").map(item => item.trim()).filter(Boolean) ?? []
+
+const defaultTimeout = z
+    .number()
+    .int()
+    .min(1)
+    .catch(10)
+    .parse(Number(Deno.env.get("DEFAULT_TIMEOUT")))
+
+const maxTimeout = z
+    .number()
+    .int()
+    .min(1)
+    .catch(30)
+    .parse(Number(Deno.env.get("MAX_TIMEOUT")))
 
 app.post("/", async c => {
     let script: string | undefined
@@ -18,7 +32,7 @@ app.post("/", async c => {
         const body = await c.req.json()
         const info = schema.parse(body)
         script = info.script
-        timeout = info.timeout ?? 10
+        timeout = z.number().int().min(1).max(maxTimeout).catch(defaultTimeout).parse(info.timeout)
     } catch (error) {
         return c.json(
             {
@@ -63,20 +77,7 @@ app.post("/", async c => {
                 c.json({
                     success: false,
                     data: null,
-                    message: "script error",
-                })
-            )
-        })
-
-        worker.addEventListener("unhandledrejection", event => {
-            URL.revokeObjectURL(url)
-            worker.terminate()
-            event.preventDefault()
-            resolve(
-                c.json({
-                    success: false,
-                    data: null,
-                    message: "script error",
+                    message: event.message ?? "unknown error",
                 })
             )
         })
