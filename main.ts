@@ -1,4 +1,5 @@
 import { Hono } from "@hono/hono"
+import consola from "consola"
 import { z } from "zod"
 
 const app = new Hono()
@@ -32,6 +33,7 @@ app.post("/", async c => {
         const body = await c.req.json()
         const info = schema.parse(body)
         script = info.script
+        consola.info(script)
         timeout = z.number().int().min(1).max(maxTimeout).catch(defaultTimeout).parse(info.timeout)
     } catch (error) {
         return c.json(
